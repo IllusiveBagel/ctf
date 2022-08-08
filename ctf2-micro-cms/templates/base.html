@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}- CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css" type="text/css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 50px;
+            width: 100%;
+            background: #669999;
+            margin: 0;
+            border-bottom: 4px solid #77767b;
+        }
+        nav a {
+            color: black;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+        nav a:hover {
+            border-bottom: 2px solid #77767b;
+        }
+        h1 {
+            width: 100%;
+            text-align: center;
+            font-size: 3em;
+        }
+        .logout {
+            position: absolute;
+            right: 20px;
+        }
+        .content { 
+            margin: 30px;
+        }
+        .posts {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .post {
+            width: 33%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 4px solid #77767b;
+            background-color: #fff;
+        }
+        .alert {
+            padding: 20px;
+            margin: 5px;
+            color: #970020;
+            background-color: #ffd5de;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Posts</a>
+        <a href="{{ url_for('create') }}">Create Post</a>
+        {% if session['logged_in'] %}
+        <a class="logout" href="{{ url_for('logout') }}">Log Out</a>
+        {% endif %}
+    </nav>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+</body>
+</html>
